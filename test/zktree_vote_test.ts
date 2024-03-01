@@ -36,11 +36,11 @@ describe("ZKTree Smart contract test", () => {
         await zktreevote.connect(signers[1]).registerCommitment(3, commitment3.commitment)
 
         // votes
-        const cd1 = await calculateMerkleRootAndZKProof(zktreevote.address, signers[2], TREE_LEVELS, commitment1, "keys/Verifier.zkey")
+        const cd1 = await calculateMerkleRootAndZKProof(zktreevote.address, signers[2], TREE_LEVELS, commitment1, "keys/ZKVerifier.sol.zkey")
         await zktreevote.connect(signers[2]).vote(1, cd1.nullifierHash, cd1.root, cd1.proof_a, cd1.proof_b, cd1.proof_c)
-        const cd2 = await calculateMerkleRootAndZKProof(zktreevote.address, signers[3], TREE_LEVELS, commitment2, "keys/Verifier.zkey")
+        const cd2 = await calculateMerkleRootAndZKProof(zktreevote.address, signers[3], TREE_LEVELS, commitment2, "keys/ZKVerifier.sol.zkey")
         await zktreevote.connect(signers[3]).vote(1, cd2.nullifierHash, cd2.root, cd2.proof_a, cd2.proof_b, cd2.proof_c)
-        const cd3 = await calculateMerkleRootAndZKProof(zktreevote.address, signers[4], TREE_LEVELS, commitment3, "keys/Verifier.zkey")
+        const cd3 = await calculateMerkleRootAndZKProof(zktreevote.address, signers[4], TREE_LEVELS, commitment3, "keys/ZKVerifier.sol.zkey")
         await zktreevote.connect(signers[4]).vote(2, cd3.nullifierHash, cd3.root, cd3.proof_a, cd3.proof_b, cd3.proof_c)
 
         // results

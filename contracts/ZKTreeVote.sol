@@ -13,10 +13,11 @@ contract ZKTreeVote is ZKTree {
     mapping(uint256 => bool) uniqueHashes;
 //    numOptions 变量，用于存储投票选项的数量。
     uint numOptions;
+    uint result;
 //    optionCounter 映射，用于存储每个选项的投票计数。
     mapping(uint => uint) optionCounter;
 
-//    定义了构造函数，用于初始化合约。它接受级别数、哈希器合约、验证器合约和投票选项数量作为参数。
+//    定义了构造函数，用于初始化合约。接受级别数、哈希器合约、验证器合约和投票选项数量作为参数。
 //    设置了合约所有者，初始化了 optionCounter 映射，并设置了合约的选项数量。
     constructor(
         uint32 _levels,
@@ -27,6 +28,7 @@ contract ZKTreeVote is ZKTree {
         owner = msg.sender;
         numOptions = _numOptions;
         for (uint i = 0; i <= numOptions; i++) optionCounter[i] = 0;
+        result = 0;
     }
 
 //  定义了 registerValidator 函数，允许合约所有者注册验证者。只有合约所有者可以调用此函数。
@@ -69,10 +71,18 @@ contract ZKTreeVote is ZKTree {
             _proof_c
         );
         optionCounter[_option] = optionCounter[_option] + 1;
+        if(optionCounter[_option] > optionCounter[result]){
+            result = _option;
+        }
     }
 
 //    定义了 getOptionCounter 函数，用于检索特定选项的投票计数。
     function getOptionCounter(uint _option) external view returns (uint) {
         return optionCounter[_option];
     }
+
+    function getResult() external view returns (uint) {
+        return result;
+    }
 }
+

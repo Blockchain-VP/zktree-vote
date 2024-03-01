@@ -7,25 +7,18 @@ from slither.analyses.data_dependency.data_dependency import (
 )
 from slither.core.declarations.solidity_variables import SolidityVariableComposed
 
-# if len(sys.argv) != 2:
-#     print("Usage: python data_dependency.py file.sol")
-#     sys.exit(-1)
-
 slither = Slither("ZKTreeVote.sol")
 
-contracts = slither.get_contract_from_name("ZKTreeVote.sol")
-assert len(contracts) == 1
+contracts = slither.get_contract_from_name("ZKTreeVote")
 contract = contracts[0]
-destination = contract.get_state_variable_from_name("destination")
-source = contract.get_state_variable_from_name("source")
+options = contract.get_state_variable_from_name("optionCounter")
+source = contract.get_state_variable_from_name("owner")
+result = contract.get_state_variable_from_name("result")
 assert source
-assert destination
+assert options
 
-print(f"{source} is dependent of {destination}: {is_dependent(source, destination, contract)}")
-assert not is_dependent(source, destination, contract)
-print(f"{destination} is dependent of {source}: {is_dependent(destination, source, contract)}")
-assert is_dependent(destination, source, contract)
 print(f"{source} is tainted {is_tainted(source, contract)}")
-assert not is_tainted(source, contract)
-print(f"{destination} is tainted {is_tainted(destination, contract)}")
-assert is_tainted(destination, contract)
+print(f"{options} is tainted {is_tainted(options, contract)}")
+print(f"{options} is dependent of {source}: {is_dependent(options, source, contract)}")
+print(f"{result} is dependent of {source}: {is_dependent(result, source, contract)}")
+print(f"{result} is dependent of {options}: {is_dependent(result, options, contract)}")
