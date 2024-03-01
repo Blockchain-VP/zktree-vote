@@ -29,6 +29,7 @@
     "html5-qrcode": "^2.3.4",
     "parcel": "^2.8.2",
     "qrcode": "^1.5.1",
+    "solc": "^0.8.24",
     "vue": "^3.3.4",
     "vue-facing-decorator": "^2.1.13",
     "zk-merkle-tree": "^1.0.2"
